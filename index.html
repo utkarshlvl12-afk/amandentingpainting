@@ -1,0 +1,1664 @@
+index.html
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman Spray Painter & Anshu Denting Works 🚘✨</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #060810;
+            --surface-card: rgba(15, 20, 35, 0.9);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            
+            --paint-accent: #00f0ff;
+            --dent-accent: #ff9900;
+            --whatsapp-green: #25d366;
+            --star-gold: #ffcc00;
+            
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        /* Background Canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.45;
+        }
+
+        /* Soft Glow Animations */
+        @keyframes softNameCyanGlow {
+            0%, 100% {
+                text-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 22px rgba(0, 240, 255, 0.95), 0 0 35px rgba(0, 240, 255, 0.6);
+            }
+        }
+
+        @keyframes softNameAmberGlow {
+            0%, 100% {
+                text-shadow: 0 0 6px rgba(255, 153, 0, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 22px rgba(255, 153, 0, 0.95), 0 0 35px rgba(255, 153, 0, 0.6);
+            }
+        }
+
+        @keyframes greenPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.8), 0 0 10px rgba(37, 211, 102, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0), 0 0 20px rgba(37, 211, 102, 0.8);
+            }
+        }
+
+        @keyframes borderShimmer {
+            0% { border-color: rgba(0, 240, 255, 0.4); }
+            50% { border-color: rgba(255, 153, 0, 0.6); }
+            100% { border-color: rgba(0, 240, 255, 0.4); }
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--whatsapp-green);
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.15) rotate(8deg);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Header Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(6, 8, 16, 0.92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 14px 20px;
+        }
+
+        .nav-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .brand-logo i {
+            font-size: 1.6rem;
+            color: var(--paint-accent);
+            animation: softNameCyanGlow 3.5s infinite ease-in-out;
+        }
+
+        .brand-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--paint-accent);
+            animation: softNameCyanGlow 3.5s infinite ease-in-out;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .share-btn-head {
+            background: rgba(37, 211, 102, 0.12);
+            color: var(--whatsapp-green);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            font-weight: 700;
+            padding: 9px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .share-btn-head:hover {
+            background: var(--whatsapp-green);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .call-btn-head {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 800;
+            padding: 9px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .call-btn-head:hover {
+            background: var(--paint-accent);
+            transform: translateY(-2px);
+        }
+
+        .maps-btn-head {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            font-weight: 600;
+            padding: 9px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .maps-btn-head:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Banner */
+        .hero {
+            padding: 45px 20px 20px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-heading {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.9rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--paint-accent);
+            margin-bottom: 22px;
+            line-height: 1.2;
+            animation: softNameCyanGlow 3.5s infinite ease-in-out;
+        }
+
+        /* ULTRA PREMIUM STYLISH TIMING BADGE */
+        .premium-timing-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            background: linear-gradient(135deg, rgba(12, 18, 34, 0.95) 0%, rgba(6, 8, 16, 0.95) 100%);
+            border: 1.5px solid rgba(0, 240, 255, 0.35);
+            padding: 12px 28px;
+            border-radius: 50px;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.08);
+            backdrop-filter: blur(16px);
+            margin-bottom: 20px;
+            animation: borderShimmer 4s infinite ease-in-out;
+            transition: all 0.35s ease;
+            cursor: default;
+        }
+
+        .premium-timing-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.35), inset 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+
+        .status-dot-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .status-dot-inner {
+            width: 10px;
+            height: 10px;
+            background-color: var(--whatsapp-green);
+            border-radius: 50%;
+            animation: greenPulse 2s infinite ease-in-out;
+        }
+
+        .timing-pill-text {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            color: #ffffff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timing-pill-text i {
+            color: var(--paint-accent);
+            font-size: 1.15rem;
+            filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.8));
+        }
+
+        .timing-highlight {
+            background: linear-gradient(90deg, #00f0ff 0%, #ff9900 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        /* Funny Mast Tagline Banner */
+        .funny-tagline-wrap {
+            display: block;
+            margin-top: 6px;
+        }
+
+        .funny-tagline-badge {
+            background: linear-gradient(135deg, rgba(255, 153, 0, 0.15) 0%, rgba(0, 240, 255, 0.15) 100%);
+            border: 1.5px solid rgba(255, 153, 0, 0.4);
+            color: #ffffff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 18px rgba(255, 153, 0, 0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .funny-tagline-badge:hover {
+            transform: scale(1.03);
+            border-color: var(--paint-accent);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Section Title Styling */
+        .section-header {
+            max-width: 1000px;
+            margin: 40px auto 18px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .paint-theme { 
+            color: var(--paint-accent);
+            animation: softNameCyanGlow 3.5s infinite ease-in-out; 
+        }
+        
+        .dent-theme { 
+            color: var(--dent-accent);
+            animation: softNameAmberGlow 3.5s infinite ease-in-out; 
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border-subtle);
+        }
+
+        /* Service Tag Chips */
+        .service-tags {
+            max-width: 1000px;
+            margin: 0 auto 18px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag-chip {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .tag-chip:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Compact Photo Grid */
+        .photo-grid-container {
+            max-width: 1000px;
+            margin: 0 auto 18px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .photo-card {
+            background: var(--surface-card);
+            border-radius: 14px;
+            border: 1px solid var(--border-subtle);
+            aspect-ratio: 4/3;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Highlighted See All Buttons */
+        .see-all-wrapper {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .see-all-btn {
+            background: rgba(15, 20, 35, 0.95);
+            color: #ffffff;
+            border: 1.5px solid;
+            padding: 14px 42px;
+            border-radius: 50px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .see-all-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+        }
+
+        .btn-paint {
+            border-color: var(--paint-accent);
+            color: var(--paint-accent);
+        }
+
+        .btn-paint:hover {
+            background: var(--paint-accent);
+            color: #000000;
+            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-dent {
+            border-color: var(--dent-accent);
+            color: var(--dent-accent);
+        }
+
+        .btn-dent:hover {
+            background: var(--dent-accent);
+            color: #000000;
+            box-shadow: 0 8px 25px rgba(255, 153, 0, 0.4);
+        }
+
+        /* Before/After Comparison Sliders Section */
+        .comparison-section {
+            max-width: 1000px;
+            margin: 40px auto 25px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .comparison-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .comparison-card h4 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            user-select: none;
+            touch-action: pan-y;
+        }
+
+        .slider-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .before-img-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .before-img-wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-width: none;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 3px;
+            height: 100%;
+            background: #ffffff;
+            z-index: 3;
+            transform: translateX(-50%);
+            cursor: ew-resize;
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .slider-handle-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 38px;
+            height: 38px;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .badge-label {
+            position: absolute;
+            top: 12px;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            z-index: 4;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+        }
+
+        .badge-before { left: 12px; color: #ff5555; }
+        .badge-after { right: 12px; color: var(--paint-accent); }
+
+        /* CUSTOMER REVIEWS / TESTIMONIALS SECTION */
+        .reviews-section {
+            max-width: 1000px;
+            margin: 45px auto 25px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .review-card {
+            background: var(--surface-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .review-stars {
+            color: var(--star-gold);
+            font-size: 0.95rem;
+            display: flex;
+            gap: 4px;
+        }
+
+        .review-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--paint-accent);
+            font-weight: 800;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .reviewer-details h5 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .reviewer-details p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* ROYAL OWNER PROFILES SECTION */
+        .owners-section {
+            max-width: 1000px;
+            margin: 50px auto 30px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .owners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        .owner-card {
+            background: linear-gradient(145deg, rgba(15, 20, 35, 0.95) 0%, rgba(8, 12, 22, 0.95) 100%);
+            border-radius: 20px;
+            border: 1.5px solid var(--border-subtle);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .owner-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+        }
+
+        .owner-card-paint:hover {
+            border-color: rgba(0, 240, 255, 0.5);
+        }
+
+        .owner-card-dent:hover {
+            border-color: rgba(255, 153, 0, 0.5);
+        }
+
+        .owner-img-wrap {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            padding: 4px;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .owner-img-wrap-paint {
+            background: linear-gradient(135deg, var(--paint-accent) 0%, #0077ff 100%);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+        }
+
+        .owner-img-wrap-dent {
+            background: linear-gradient(135deg, var(--dent-accent) 0%, #ff5500 100%);
+            box-shadow: 0 0 20px rgba(255, 153, 0, 0.35);
+        }
+
+        .owner-avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg-dark);
+            background-color: #121829;
+        }
+
+        .owner-badge-tag {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .owner-tag-paint {
+            background: rgba(0, 240, 255, 0.12);
+            color: var(--paint-accent);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .owner-tag-dent {
+            background: rgba(255, 153, 0, 0.12);
+            color: var(--dent-accent);
+            border: 1px solid rgba(255, 153, 0, 0.3);
+        }
+
+        .owner-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .owner-role {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .owner-bio {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            line-height: 1.45;
+            margin-bottom: 18px;
+        }
+
+        .owner-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .owner-btn-small {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-owner-call {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-owner-call:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .btn-owner-wa {
+            background: rgba(37, 211, 102, 0.15);
+            color: var(--whatsapp-green);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-owner-wa:hover {
+            background: var(--whatsapp-green);
+            color: #ffffff;
+        }
+
+        /* Direct Contact Box Section */
+        .contact-box-section {
+            max-width: 1000px;
+            margin: 45px auto 25px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-card {
+            background: var(--surface-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            padding: 35px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .contact-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .location-info-text {
+            color: var(--paint-accent);
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .contact-btn {
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.98rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-call-large {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .btn-call-large:hover {
+            background: var(--paint-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-wa-large {
+            background: var(--whatsapp-green);
+            color: #ffffff;
+        }
+
+        .btn-wa-large:hover {
+            opacity: 0.92;
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .highlights-section {
+            max-width: 1000px;
+            margin: 30px auto 25px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card {
+            background: var(--surface-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            padding: 22px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-card i {
+            font-size: 1.5rem;
+            color: var(--paint-accent);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .feature-text h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #ffffff;
+        }
+
+        .feature-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Modal Gallery View */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 8, 16, 0.96);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 35px 20px;
+        }
+
+        .modal-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 14px;
+        }
+
+        .close-modal {
+            font-size: 2.2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #ffffff;
+        }
+
+        .modal-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .add-more-box {
+            background: var(--surface-card);
+            border: 2px dashed var(--border-subtle);
+            border-radius: 12px;
+            aspect-ratio: 4/3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            gap: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: all 0.25s;
+        }
+
+        .add-more-box:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(6, 8, 16, 0.95);
+            padding: 30px 20px;
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .credit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface-card);
+            padding: 9px 24px;
+            border-radius: 30px;
+            border: 1px solid var(--border-subtle);
+            font-size: 0.9rem;
+            margin-top: 14px;
+            color: var(--text-muted);
+        }
+
+        .credit-badge strong {
+            color: #ffffff;
+        }
+
+        .credit-badge i { 
+            color: #ff3366;
+        }
+
+        @media (max-width: 600px) {
+            .main-heading { font-size: 2rem; }
+            .section-title { font-size: 1.4rem; }
+            .brand-title { font-size: 1.15rem; }
+            .see-all-btn { padding: 12px 30px; font-size: 1rem; }
+            .photo-grid-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .maps-btn-head span, .share-btn-head span { display: none; }
+            .funny-tagline-badge { font-size: 0.85rem; padding: 8px 18px; }
+            .premium-timing-card { padding: 10px 20px; gap: 10px; }
+            .timing-pill-text { font-size: 0.92rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Soft Smoke & Mini Electric Particle Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919565469545?text=Hello%20Aman%20%26%20Anshu,%20mujhse%20vehicle%20repair%20ka%20quote%20chahiye%20🚗" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand-logo">
+                <i class="fa-solid fa-spray-can-sparkles"></i>
+                <div class="brand-title">
+                    AMAN & ANSHU ⚡
+                </div>
+            </a>
+            <div class="nav-actions">
+                <button class="share-btn-head" onclick="shareWebsite()" title="Share Website">
+                    <i class="fa-brands fa-whatsapp"></i> <span>Share</span>
+                </button>
+                <a href="https://www.google.com/maps/search/?api=1&query=209867+takiya+patan+kakrari+road" target="_blank" class="maps-btn-head">
+                    <i class="fa-solid fa-location-dot"></i> <span>Location</span>
+                </a>
+                <a href="tel:+919565469545" class="call-btn-head">
+                    <i class="fa-solid fa-phone"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="main-heading">AMAN SPRAY PAINTER & ANSHU DENTING 🚗🎨</h1>
+        
+        <!-- ULTRA PREMIUM STYLISH TIMING BADGE -->
+        <div class="premium-timing-card">
+            <div class="status-dot-wrap">
+                <div class="status-dot-inner"></div>
+            </div>
+            <div class="timing-pill-text">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                OPEN 7 DAYS REGULAR <span class="timing-highlight">(9:00 AM - 9:00 PM)</span> 🕒
+            </div>
+        </div>
+
+        <!-- MAST FUNNY TAGLINE BADGE -->
+        <div class="funny-tagline-wrap">
+            <div class="funny-tagline-badge">
+                "Thoki aapne, chamkayenge hum! (Bhabhi ji ko pata bhi nahi chalega 😉)" 🔥
+            </div>
+        </div>
+    </section>
+
+    <!-- Aman Spray Painter Section -->
+    <div class="section-header">
+        <div class="section-title paint-theme">
+            <i class="fa-solid fa-spray-can"></i> AMAN SPRAY PAINTER ✨
+        </div>
+        <div class="section-line"></div>
+    </div>
+
+    <!-- Aman Service Tags -->
+    <div class="service-tags">
+        <span class="tag-chip">🎨 Full Body Spray Paint</span>
+        <span class="tag-chip">✨ Scratch & Panel Touchup</span>
+        <span class="tag-chip">🛞 Alloy Wheel Custom Color</span>
+        <span class="tag-chip">💎 High Gloss Mirror Polish</span>
+    </div>
+
+    <!-- Aman Front Grid with Fixed Real Photos -->
+    <div class="photo-grid-container" id="amanMainGrid">
+        <div class="photo-card paint-card">
+            <img id="aman_img_0" src="https://i.ibb.co/9H7D1WKj/ff4c1c97-b7a9-4a71-80a2-c84ae72893ae.jpg" alt="Aman Painting Work 1">
+        </div>
+
+        <div class="photo-card paint-card">
+            <img id="aman_img_1" src="https://i.ibb.co/4zmFCHG/dfde0338-d19e-4d23-9bb9-3f2e7cdd7668.jpg" alt="Aman Painting Work 2">
+        </div>
+
+        <div class="photo-card paint-card">
+            <img id="aman_img_2" src="https://i.ibb.co/twFrLSgs/39cf0791-8631-4fd6-96b5-251fc3f6c49b.jpg" alt="Aman Painting Work 3">
+        </div>
+
+        <div class="photo-card paint-card">
+            <img id="aman_img_3" src="https://i.ibb.co/CK7Swwsf/65d620fe-be2f-4eb1-98b8-553575f0a72b.jpg" alt="Aman Painting Work 4">
+        </div>
+    </div>
+
+    <div class="see-all-wrapper">
+        <button class="see-all-btn btn-paint" onclick="openGallery('aman')">
+            <i class="fa-solid fa-images"></i> See All Images (Aman Works) 🖼️
+        </button>
+    </div>
+
+    <!-- Anshu Denting Section -->
+    <div class="section-header">
+        <div class="section-title dent-theme">
+            <i class="fa-solid fa-hammer"></i> ANSHU DENTING 🛠️
+        </div>
+        <div class="section-line"></div>
+    </div>
+
+    <!-- Anshu Service Tags -->
+    <div class="service-tags">
+        <span class="tag-chip">🔨 Paintless Dry Denting</span>
+        <span class="tag-chip">📐 Accident Panel Alignment</span>
+        <span class="tag-chip">🚘 Bumper & Body Repair</span>
+        <span class="tag-chip">⚡ Hydro Denting Work</span>
+    </div>
+
+    <!-- Anshu Front Grid with Fixed Real Photos -->
+    <div class="photo-grid-container" id="anshuMainGrid">
+        <div class="photo-card dent-card">
+            <img id="anshu_img_0" src="https://i.ibb.co/rfkcqzYN/IMG-4258.jpg" alt="Anshu Denting Work 1">
+        </div>
+
+        <div class="photo-card dent-card">
+            <img id="anshu_img_1" src="https://i.ibb.co/8LT96FvZ/IMG-4256.webp" alt="Anshu Denting Work 2">
+        </div>
+
+        <div class="photo-card dent-card">
+            <img id="anshu_img_2" src="https://i.ibb.co/Z1hZKc08/IMG-4254.jpg" alt="Anshu Denting Work 3">
+        </div>
+
+        <div class="photo-card dent-card">
+            <img id="anshu_img_3" src="https://i.ibb.co/6Rn25Sdc/IMG-4257.webp" alt="Anshu Denting Work 4">
+        </div>
+    </div>
+
+    <div class="see-all-wrapper">
+        <button class="see-all-btn btn-dent" onclick="openGallery('anshu')">
+            <i class="fa-solid fa-images"></i> See All Images (Anshu Works) 🖼️
+        </button>
+    </div>
+
+    <!-- BEFORE / AFTER COMPARISON SLIDERS SECTION -->
+    <section class="comparison-section">
+        <div class="section-header" style="margin: 0 0 20px 0; padding:0;">
+            <div class="section-title paint-theme">
+                <i class="fa-solid fa-sliders"></i> WORK TRANSFORMATION (BEFORE / AFTER) ⚡
+            </div>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="comparison-grid">
+            <!-- Aman Painting Before/After -->
+            <div class="comparison-card">
+                <h4 style="color: var(--paint-accent);"><i class="fa-solid fa-spray-can"></i> Aman Paint Finish 🎨</h4>
+                <div class="slider-container" id="slider_aman">
+                    <img src="https://i.ibb.co/Lz0wtW3Q/IMG-4261.jpg" class="slider-img" id="after_img_aman" alt="After Paint">
+                    <div class="before-img-wrap" id="wrap_aman">
+                        <img src="https://i.ibb.co/4RNPrBj0/IMG-4261.jpg" id="before_img_aman" alt="Before Paint">
+                    </div>
+                    <div class="badge-label badge-before">BEFORE ❌</div>
+                    <div class="badge-label badge-after">AFTER ✨</div>
+                    <div class="slider-handle" id="handle_aman">
+                        <div class="slider-handle-button"><i class="fa-solid fa-left-right"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anshu Denting Before/After -->
+            <div class="comparison-card">
+                <h4 style="color: var(--dent-accent);"><i class="fa-solid fa-hammer"></i> Anshu Dent Removal 🔨</h4>
+                <div class="slider-container" id="slider_anshu">
+                    <img src="https://i.ibb.co/jPBT18Sc/IMG-4260.jpg" class="slider-img" id="after_img_anshu" alt="After Denting">
+                    <div class="before-img-wrap" id="wrap_anshu">
+                        <img src="https://i.ibb.co/sJyJnw75/IMG-4259.png" id="before_img_anshu" alt="Before Denting">
+                    </div>
+                    <div class="badge-label badge-before">BEFORE ❌</div>
+                    <div class="badge-label badge-after">AFTER ✨</div>
+                    <div class="slider-handle" id="handle_anshu">
+                        <div class="slider-handle-button"><i class="fa-solid fa-left-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTHENTIC INDIAN CUSTOMER REVIEWS & FEEDBACK -->
+    <section class="reviews-section">
+        <div class="section-header" style="margin: 0 0 20px 0; padding:0;">
+            <div class="section-title dent-theme">
+                <i class="fa-solid fa-star"></i> CUSTOMER REVIEWS & FEEDBACK ⭐
+            </div>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Bhai Aman ne meri Scorpio N ka glossy black paint restoration aisi ki ki ekdum company showroom jaisa chamak gaya. Kaam me finishing 10/10 hai! 👌"</p>
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">RK</div>
+                    <div class="reviewer-details">
+                        <h5>Rohan Kumar</h5>
+                        <p>Mahindra Scorpio-N Owner 🚘</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Anshu bhai ne Swift ke side door ki gehri dent bina original paint kharab kiye dry denting se aisi nikali, lagta hi nahi ki yahan koi accident hua tha. 🔥"</p>
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar" style="color:var(--dent-accent);">AS</div>
+                    <div class="reviewer-details">
+                        <h5>Amit Singh</h5>
+                        <p>Maruti Swift Owner 🚗</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Takiya Patan Kakrari Road par sabse genuine rate me sabse fast service milti hai. Verna ki bumper fitting & paint 1 din me complete kar diya. 👍"</p>
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">VY</div>
+                    <div class="reviewer-details">
+                        <h5>Vikas Yadav</h5>
+                        <p>Hyundai Verna Owner 🏎️</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Bullet tank & mudguard ka custom matte black spray paint karwaya tha. Color durability & finish top-notch hai! 🏍️"</p>
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar" style="color:var(--dent-accent);">SP</div>
+                    <div class="reviewer-details">
+                        <h5>Saurabh Patel</h5>
+                        <p>Royal Enfield Owner 🏍️</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="review-text">"Thar ki off-roading ke baad bonnet par scratch aur dents the, Anshu & Aman dono ne milkar ekdum naye jaisa set kar diya! 🙌"</p>
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">ST</div>
+                    <div class="reviewer-details">
+                        <h5>Shivam Tiwari</h5>
+                        <p>Mahindra Thar Owner 🚙</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROYAL WORKSHOP OWNERS PROFILE SECTION -->
+    <section class="owners-section">
+        <div class="section-header" style="margin: 0 0 22px 0; padding:0;">
+            <div class="section-title paint-theme">
+                <i class="fa-solid fa-user-gear"></i> MEET THE MASTERS (WORKSHOP OWNERS) 👑
+            </div>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="owners-grid">
+            <!-- Aman Profile -->
+            <div class="owner-card owner-card-paint">
+                <div class="owner-img-wrap owner-img-wrap-paint">
+                    <img src="https://i.ibb.co/FkksmyN0/de1f3f20-2000-5ef2-596c-c72fcd6f233c.jpg" class="owner-avatar-img" alt="Aman Spray Painter Owner">
+                </div>
+                <span class="owner-badge-tag owner-tag-paint">Owner & Paint Expert</span>
+                <h3 class="owner-name">AMAN</h3>
+                <p class="owner-role">Master Spray Painter & Restoration Lead 🎨</p>
+                <p class="owner-bio">"High-gloss finish, custom color matching aur long-lasting paint protection hamari guaranteed pehchan hai."</p>
+                <div class="owner-actions">
+                    <a href="tel:+919565469545" class="owner-btn-small btn-owner-call"><i class="fa-solid fa-phone"></i> Call Aman</a>
+                    <a href="https://wa.me/919565469545?text=Hello%20Aman%20bhai,%20gadi%20ke%20paint%20ke%20liye%20baat%20karni%20hai" target="_blank" class="owner-btn-small btn-owner-wa"><i class="fa-brands fa-whatsapp"></i> Chat</a>
+                </div>
+            </div>
+
+            <!-- Anshu Profile -->
+            <div class="owner-card owner-card-dent">
+                <div class="owner-img-wrap owner-img-wrap-dent">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AnshuDentMaster&backgroundColor=0f1423" class="owner-avatar-img" alt="Anshu Denting Specialist">
+                </div>
+                <span class="owner-badge-tag owner-tag-dent">Owner & Dent Specialist</span>
+                <h3 class="owner-name">ANSHU</h3>
+                <p class="owner-role">Precision Dry Denting & Panel Specialist 🛠️</p>
+                <p class="owner-bio">"Bina original paint kharab kiye, sabse gehri dents bhi 100% smooth aur showroom level alignment me lana mera passion hai."</p>
+                <div class="owner-actions">
+                    <a href="tel:+918382089501" class="owner-btn-small btn-owner-call"><i class="fa-solid fa-phone"></i> Call Anshu</a>
+                    <a href="https://wa.me/918382089501?text=Hello%20Anshu%20bhai,%20gadi%20ke%20denting%20ke%20liye%20baat%20karni%20hai" target="_blank" class="owner-btn-small btn-owner-wa"><i class="fa-brands fa-whatsapp"></i> Chat</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Direct Contact Box -->
+    <section class="contact-box-section">
+        <div class="contact-card">
+            <h3>WORKSHOP LOCATION & CONTACT 📍</h3>
+            <div class="location-info-text">
+                <i class="fa-solid fa-location-dot"></i> Takiya Patan Kakrari Road, PIN 209867
+            </div>
+            <p style="color: var(--text-muted); font-size:0.92rem;">Book your vehicle inspection or call directly at <strong>+91 95654 69545</strong> / <strong>+91 83820 89501</strong> 📞</p>
+            <div class="contact-actions">
+                <a href="tel:+919565469545" class="contact-btn btn-call-large">
+                    <i class="fa-solid fa-phone"></i> Direct Call (+91 95654 69545)
+                </a>
+                <a href="https://wa.me/919565469545?text=Hello%20Aman%20%26%20Anshu,%20mujhse%20vehicle%20repair%20ka%20quote%20chahiye%20🚗" target="_blank" class="contact-btn btn-wa-large">
+                    <i class="fa-brands fa-whatsapp"></i> Send Photo on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section class="highlights-section">
+        <div class="feature-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div class="feature-text">
+                <h4>Pucka Color Guarantee 💯</h4>
+                <p>High-quality long lasting gloss and weather resistance finish.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-bolt"></i>
+            <div class="feature-text">
+                <h4>Fast & Precise Work ⚡</h4>
+                <p>Quick turnaround dent removing and paint booth finishing.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <div class="feature-text">
+                <h4>Best Genuine Price 💰</h4>
+                <p>Affordable rates for cars, bikes, and heavy vehicle restoration.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Gallery View -->
+    <div class="modal" id="galleryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle" style="font-family:'Rajdhani',sans-serif; font-size:1.9rem; font-weight:800;">WORK GALLERY</h3>
+                <span class="close-modal" onclick="closeGallery()">&times;</span>
+            </div>
+            <div class="modal-gallery-grid" id="modalGrid"></div>
+            <div style="text-align: center;">
+                <label for="extraUploadInput" class="add-more-box" style="display:inline-flex; width:220px;">
+                    <i class="fa-solid fa-plus" style="font-size:1.5rem;"></i>
+                    <span>Add New Photo</span>
+                </label>
+                <input type="file" id="extraUploadInput" class="file-input" accept="image/*" onchange="uploadExtraPhoto(event)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">&copy; Aman Spray Painter & Anshu Denting. All Rights Reserved. 🚘✨</p>
+        <div class="credit-badge">
+            Made with <i class="fa-solid fa-heart"></i> by <strong>Utkarsh</strong> 🔥
+        </div>
+    </footer>
+
+    <script>
+        // PERMANENT REAL PHOTOS LIST FOR AMAN SPRAY PAINTER GALLERY
+        const amanPermanentPhotos = [
+            "https://i.ibb.co/27xtCxp3/bc5196f3-d8a7-46f7-bd45-ff58830a5f6c.jpg",
+            "https://i.ibb.co/9H7D1WKj/ff4c1c97-b7a9-4a71-80a2-c84ae72893ae.jpg",
+            "https://i.ibb.co/4zmFCHG/dfde0338-d19e-4d23-9bb9-3f2e7cdd7668.jpg",
+            "https://i.ibb.co/6cn7dGyw/ac297140-9eb1-4f99-b39f-503a163e3a03.jpg",
+            "https://i.ibb.co/twFrLSgs/39cf0791-8631-4fd6-96b5-251fc3f6c49b.jpg",
+            "https://i.ibb.co/Y4tSvvTW/5caf448a-59d5-4d3b-92e1-99ec0b026265.jpg",
+            "https://i.ibb.co/JRj9D3fJ/62d3702b-08bb-4bad-9744-b00a24275dd0.jpg",
+            "https://i.ibb.co/BHY7fFY9/9d2438a8-c203-49e4-94ab-3b7aa842c8f1.jpg",
+            "https://i.ibb.co/60QB3yV1/b35ef4d6-c75e-463e-9d56-2f256b537269.jpg",
+            "https://i.ibb.co/SDL6p3Qf/ab3b2ae4-4b10-43e5-a96c-4ab8a343e490.jpg",
+            "https://i.ibb.co/CK7Swwsf/65d620fe-be2f-4eb1-98b8-553575f0a72b.jpg",
+            "https://i.ibb.co/846dyZy6/e8f81a8c-5844-4007-b929-4cf5f0b6b51a.jpg",
+            "https://i.ibb.co/bMsJwtDY/6429cc82-3123-4e3b-9c0b-63efccc5e102.jpg",
+            "https://i.ibb.co/tgk8Ng5/a89168af-690f-4c7a-bc08-2e54243f67f9.jpg",
+            "https://i.ibb.co/VYHmZGyV/f594417a-ecc4-4da4-bc14-dc077ca424c3.jpg"
+        ];
+
+        // PERMANENT REAL PHOTOS LIST FOR ANSHU DENTING GALLERY
+        const anshuPermanentPhotos = [
+            "https://i.ibb.co/rGnQ68bk/IMG-4252.png",
+            "https://i.ibb.co/QFsTqyC5/IMG-4253.webp",
+            "https://i.ibb.co/Z1hZKc08/IMG-4254.jpg",
+            "https://i.ibb.co/TD9cV1Qp/IMG-4255.webp",
+            "https://i.ibb.co/6Rn25Sdc/IMG-4257.webp",
+            "https://i.ibb.co/rfkcqzYN/IMG-4258.jpg",
+            "https://i.ibb.co/27xtCxp3/bc5196f3-d8a7-46f7-bd45-ff58830a5f6c.jpg",
+            "https://i.ibb.co/bMsJwtDY/6429cc82-3123-4e3b-9c0b-63efccc5e102.jpg",
+            "https://i.ibb.co/60QB3yV1/b35ef4d6-c75e-463e-9d56-2f256b537269.jpg"
+        ];
+
+        // WhatsApp Web Share Logic
+        function shareWebsite() {
+            const text = encodeURIComponent("Check out Aman Spray Painter & Anshu Denting Works! Best denting & spray painting shop in Takiya Patan Kakrari Road: ");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://wa.me/?text=${text}${url}`, '_blank');
+        }
+
+        // Background Particle Canvas
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = -Math.random() * 0.4 - 0.1;
+                this.alpha = Math.random() * 0.5 + 0.1;
+                this.color = Math.random() > 0.5 ? '#00f0ff' : '#ff9900';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.y < 0 || this.x < 0 || this.x > canvas.width) {
+                    this.reset();
+                    this.y = canvas.height;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 35; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateBg() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // BEFORE / AFTER SLIDER INTERACTION LOGIC
+        function initComparisonSlider(id) {
+            const container = document.getElementById(`slider_${id}`);
+            const wrap = document.getElementById(`wrap_${id}`);
+            const handle = document.getElementById(`handle_${id}`);
+            let isDragging = false;
+
+            function setPosition(x) {
+                const rect = container.getBoundingClientRect();
+                let pos = x - rect.left;
+                if (pos < 0) pos = 0;
+                if (pos > rect.width) pos = rect.width;
+                const percentage = (pos / rect.width) * 100;
+                wrap.style.width = `${percentage}%`;
+                handle.style.left = `${percentage}%`;
+            }
+
+            container.addEventListener('mousedown', (e) => { isDragging = true; setPosition(e.clientX); });
+            window.addEventListener('mouseup', () => { isDragging = false; });
+            window.addEventListener('mousemove', (e) => { if (isDragging) setPosition(e.clientX); });
+
+            container.addEventListener('touchstart', (e) => { isDragging = true; setPosition(e.touches[0].clientX); });
+            window.addEventListener('touchend', () => { isDragging = false; });
+            window.addEventListener('touchmove', (e) => { if (isDragging) setPosition(e.touches[0].clientX); });
+        }
+
+        initComparisonSlider('aman');
+        initComparisonSlider('anshu');
+
+        function openGallery(owner) {
+            currentOwner = owner;
+            const modal = document.getElementById('galleryModal');
+            const title = document.getElementById('modalTitle');
+            const modalGrid = document.getElementById('modalGrid');
+            
+            title.innerText = owner === 'aman' ? 'AMAN SPRAY PAINTER - ALL WORK 🎨' : 'ANSHU DENTING - ALL WORK 🛠️';
+            title.style.color = owner === 'aman' ? 'var(--paint-accent)' : 'var(--dent-accent)';
+            
+            modalGrid.innerHTML = '';
+
+            const listToRender = owner === 'aman' ? amanPermanentPhotos : anshuPermanentPhotos;
+
+            listToRender.forEach(src => {
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                card.innerHTML = `<img src="${src}" alt="${owner} Work">`;
+                modalGrid.appendChild(card);
+            });
+
+            modal.style.display = 'block';
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryModal').style.display = 'none';
+        }
+
+        function uploadExtraPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const modalGrid = document.getElementById('modalGrid');
+                    const card = document.createElement('div');
+                    card.className = 'photo-card';
+                    card.innerHTML = `<img src="${e.target.result}" alt="Work Image">`;
+                    modalGrid.appendChild(card);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
